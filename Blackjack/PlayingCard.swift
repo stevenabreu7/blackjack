@@ -42,4 +42,35 @@ class PlayingCard {
     func getValue() -> Int {
         return value
     }
+    
+    func changeAceValue() {
+        if rank == 1 {
+            value = 1
+        }
+    }
+    
+    func getAbsoluteCardNumber() -> Int {
+        return cardNumber
+    }
+    
+    func isEqualTo(card: PlayingCard) -> Bool {
+        return card.getAbsoluteCardNumber() == getAbsoluteCardNumber()
+    }
+    
+    func getImageName() -> String {
+        switch suit {
+        case 0:
+            return "Spades " + String(rank)
+        case 1:
+            return "Hearts " + String(rank)
+        case 2:
+            return "Diamonds " + String(rank)
+        case 3:
+            return "Clubs " + String(rank)
+        default:
+            print("ERROR getting card image name.")
+            print(String(suit) + " " + String(rank) + " " + String(cardNumber))
+            return ""
+        }
+    }
 }
