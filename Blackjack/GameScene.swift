@@ -47,9 +47,9 @@ class GameScene: SKScene {
     let betCoin200 = SKSpriteNode(imageNamed: "coin200")
     
     //CONSTANTS
-    let ANIMATION_DURATION = NSTimeInterval(0.5)
+    let ANIMATION_DURATION = TimeInterval(0.5)
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         
         cardPile = Deck(numberOfDecks: 2)
         model = GameModel()
@@ -59,7 +59,7 @@ class GameScene: SKScene {
     
     func setupScene() {
         //background
-        bg.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2)
+        bg.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height / 2)
         bg.size = self.frame.size
         bg.zPosition = -1
         self.addChild(bg)
@@ -67,7 +67,7 @@ class GameScene: SKScene {
         //deck
         deck.size.width = self.frame.size.width / 5
         deck.size.height = deck.size.width * 1.5
-        deck.position = CGPointMake(self.frame.size.width - deck.size.width * 0.8, self.frame.size.height - deck.size.height * 1.2)
+        deck.position = CGPoint(x: self.frame.size.width - deck.size.width * 0.8, y: self.frame.size.height - deck.size.height * 1.2)
         deck.zRotation = 0.2
         self.addChild(deck)
         
@@ -76,29 +76,29 @@ class GameScene: SKScene {
         let coins : [SKSpriteNode] = [coin10, coin50, coin100, coin200, betCoin10, betCoin50, betCoin100, betCoin200]
         
         for coin in coins {
-            coin.size = CGSizeMake(coinSize, coinSize)
+            coin.size = CGSize(width: coinSize, height: coinSize)
             coin.zPosition = 2
         }
         
-        coin10.position = CGPointMake(coin10.size.width * 1.1, coin10.size.height * 0.75)
-        coin50.position = CGPointMake(coin50.size.width * 0.6, coin50.size.height * 1.75)
-        coin100.position = CGPointMake(coin100.size.width * 2.2, coin100.size.height * 0.75)
-        coin200.position = CGPointMake(coin200.size.width * 1.7, coin200.size.height * 1.75)
+        coin10.position = CGPoint(x: coin10.size.width * 1.1, y: coin10.size.height * 0.75)
+        coin50.position = CGPoint(x: coin50.size.width * 0.6, y: coin50.size.height * 1.75)
+        coin100.position = CGPoint(x: coin100.size.width * 2.2, y: coin100.size.height * 0.75)
+        coin200.position = CGPoint(x: coin200.size.width * 1.7, y: coin200.size.height * 1.75)
         
         self.addChild(coin10)
         self.addChild(coin50)
         self.addChild(coin100)
         self.addChild(coin200)
         
-        betCoin10.position = CGPointMake(self.frame.size.width / 2 + coin10.size.width * 1.1, coin10.size.height * 0.75)
-        betCoin50.position = CGPointMake(self.frame.size.width / 2 + coin50.size.width * 0.6, coin50.size.height * 1.75)
-        betCoin100.position = CGPointMake(self.frame.size.width / 2 + coin100.size.width * 2.2, coin100.size.height * 0.75)
-        betCoin200.position = CGPointMake(self.frame.size.width / 2 + coin200.size.width * 1.7, coin200.size.height * 1.75)
+        betCoin10.position = CGPoint(x: self.frame.size.width / 2 + coin10.size.width * 1.1, y: coin10.size.height * 0.75)
+        betCoin50.position = CGPoint(x: self.frame.size.width / 2 + coin50.size.width * 0.6, y: coin50.size.height * 1.75)
+        betCoin100.position = CGPoint(x: self.frame.size.width / 2 + coin100.size.width * 2.2, y: coin100.size.height * 0.75)
+        betCoin200.position = CGPoint(x: self.frame.size.width / 2 + coin200.size.width * 1.7, y: coin200.size.height * 1.75)
         
         //Coinplace
         coinPlace.anchorPoint = CGPoint(x: 0, y: 0)
         coinPlace.zPosition = 1
-        coinPlace.position = CGPointMake(self.frame.size.width / 2, coin50.size.height * 0.15)
+        coinPlace.position = CGPoint(x: self.frame.size.width / 2, y: coin50.size.height * 0.15)
         coinPlace.size.width = coin50.size.width * 2.8
         coinPlace.size.height = coin50.size.height * 2.2
         self.addChild(coinPlace)
@@ -114,53 +114,53 @@ class GameScene: SKScene {
         split.position.x = self.frame.size.width * 0.875
         
         for label in [hit, stand, double, split] {
-            label.horizontalAlignmentMode = .Center
+            label.horizontalAlignmentMode = .center
             label.position.y = self.frame.size.height * 0.25
-            label.fontColor = SKColor.blackColor()
+            label.fontColor = SKColor.black
             label.fontSize = 22
         }
         
         //LABELS
-        bettingLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
-        bettingLabel.position = CGPointMake(20, self.frame.size.height - 30)
+        bettingLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        bettingLabel.position = CGPoint(x: 20, y: self.frame.size.height - 30)
         bettingLabel.fontSize = 25
-        bettingLabel.fontColor = SKColor.whiteColor()
+        bettingLabel.fontColor = SKColor.white
         bettingLabel.zPosition = 1
         bettingLabel.text = "Bet: 0"
         self.addChild(bettingLabel)
         
-        moneyLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left
-        moneyLabel.position = CGPointMake(self.frame.size.width / 2, self.frame.size.height - 30)
+        moneyLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        moneyLabel.position = CGPoint(x: self.frame.size.width / 2, y: self.frame.size.height - 30)
         moneyLabel.fontSize = 25
-        moneyLabel.fontColor = SKColor.whiteColor()
+        moneyLabel.fontColor = SKColor.white
         moneyLabel.text = "Money: " + String(model.money)
         moneyLabel.zPosition = 1
         self.addChild(moneyLabel)
         
-        restartLabel.position = CGPointMake(deck.position.x, deck.position.y - deck.size.height)
-        restartLabel.fontColor = SKColor.blackColor()
+        restartLabel.position = CGPoint(x: deck.position.x, y: deck.position.y - deck.size.height)
+        restartLabel.fontColor = SKColor.black
         restartLabel.fontSize = 30
         restartLabel.text = "Restart"
         self.addChild(restartLabel)
         
-        dealerValueLabel.position = CGPointMake(self.frame.size.width * 0.2, deck.position.y - deck.size.height / 2 - 30)
-        dealerValueLabel.fontColor = SKColor.whiteColor()
+        dealerValueLabel.position = CGPoint(x: self.frame.size.width * 0.2, y: deck.position.y - deck.size.height / 2 - 30)
+        dealerValueLabel.fontColor = SKColor.white
         dealerValueLabel.text = "dealer"
         dealerValueLabel.fontSize = 20
         
-        playerValueLabel.position = CGPointMake(self.frame.size.width * 0.4, self.frame.size.height * 0.45 - deck.size.height / 2 - 30)
-        playerValueLabel.fontColor = SKColor.whiteColor()
+        playerValueLabel.position = CGPoint(x: self.frame.size.width * 0.4, y: self.frame.size.height * 0.45 - deck.size.height / 2 - 30)
+        playerValueLabel.fontColor = SKColor.white
         playerValueLabel.text = "player"
         playerValueLabel.fontSize = 20
         
-        runningCountLabel.position = CGPointMake(deck.position.x, deck.position.y - deck.size.height * 1.5)
-        runningCountLabel.fontColor = SKColor.whiteColor()
+        runningCountLabel.position = CGPoint(x: deck.position.x, y: deck.position.y - deck.size.height * 1.5)
+        runningCountLabel.fontColor = SKColor.white
         runningCountLabel.text = "Running: " + "0"
         runningCountLabel.fontSize = 20
         self.addChild(runningCountLabel)
         
-        trueCountLabel.position = CGPointMake(deck.position.x, deck.position.y - deck.size.height * 1.75)
-        trueCountLabel.fontColor = SKColor.whiteColor()
+        trueCountLabel.position = CGPoint(x: deck.position.x, y: deck.position.y - deck.size.height * 1.75)
+        trueCountLabel.fontColor = SKColor.white
         trueCountLabel.fontSize = 20
         trueCountLabel.text = "True: " + String(model.trueCount)
         self.addChild(trueCountLabel)
@@ -178,28 +178,28 @@ class GameScene: SKScene {
 //        self.addChild(deckCountLabel)
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            let location = touch.locationInNode(self)
+            let location = touch.location(in: self)
             
             setBets(location)
-            if nodeAtPoint(location) == deck {
+            if atPoint(location) == deck {
                 firstDeal()
             }
             playerOptions(location)
-            if nodeAtPoint(location) == restartLabel {
+            if atPoint(location) == restartLabel {
                 model.money += model.bet
                 restartGame()
             }
         }
     }
     
-    func playerOptions(location: CGPoint) {
-        if nodeAtPoint(location) == hit {
+    func playerOptions(_ location: CGPoint) {
+        if atPoint(location) == hit {
             playerHits()
-        } else if nodeAtPoint(location) == stand {
+        } else if atPoint(location) == stand {
             playerStands()
-        } else if nodeAtPoint(location) == double {
+        } else if atPoint(location) == double {
             playerDoubles()
         }
     }
@@ -208,7 +208,7 @@ class GameScene: SKScene {
         if model.getPlayerValue() < 22 {
             dealPlayer()
             if model.didPlayerBust() {
-                self.runAction(SKAction.sequence([SKAction.waitForDuration(ANIMATION_DURATION), SKAction.runBlock({ self.playerBusted() })]))
+                self.run(SKAction.sequence([SKAction.wait(forDuration: ANIMATION_DURATION), SKAction.run({ self.playerBusted() })]))
             }
             playerValueLabel.text = String(model.getPlayerValue())
         }
@@ -218,9 +218,9 @@ class GameScene: SKScene {
         //turn dealers first card
         let cardSprite = SKSpriteNode(imageNamed: model.dealerCards[0].getImageName())
         cardSprite.size = deck.size
-        cardSprite.position = self.childNodeWithName("dealer0")!.position
+        cardSprite.position = self.childNode(withName: "dealer0")!.position
         cardSprite.zPosition = 1
-        self.childNodeWithName("dealer0")?.removeFromParent()
+        self.childNode(withName: "dealer0")?.removeFromParent()
         cardSprite.name = "dealer0"
         self.addChild(cardSprite)
         //update dealer value label
@@ -232,14 +232,14 @@ class GameScene: SKScene {
     }
     
     func dealerWorkflow() {
-        let waitAction = SKAction.waitForDuration(ANIMATION_DURATION)
-        let dealDealerAction = SKAction.runBlock({
+        let waitAction = SKAction.wait(forDuration: ANIMATION_DURATION)
+        let dealDealerAction = SKAction.run({
             self.dealDealer()
         })
         let dealAndWaitSequence = SKAction.sequence([dealDealerAction, waitAction])
         
         if model.getDealerValue() < 17 {
-            self.runAction(dealAndWaitSequence, completion: {_ in self.dealerWorkflow()})
+            self.run(dealAndWaitSequence, completion: {_ in self.dealerWorkflow()})
         } else {
             showdown()
         }
@@ -293,7 +293,7 @@ class GameScene: SKScene {
         }
         //clear cards
         for card in model.playedCards {
-            self.childNodeWithName(card)?.removeFromParent()
+            self.childNode(withName: card)?.removeFromParent()
         }
         //clear value labels
         playerValueLabel.removeFromParent()
@@ -313,17 +313,17 @@ class GameScene: SKScene {
     }
     
     func gameOver() {
-        NSUserDefaults.standardUserDefaults().setInteger(model.money, forKey: "money")
+        UserDefaults.standard.set(model.money, forKey: "money")
     }
     
-    func setBets(location: CGPoint) {
+    func setBets(_ location: CGPoint) {
         let availableCoins = [coin10, coin50, coin100, coin200]
         let bettedCoins = [betCoin10, betCoin50, betCoin100, betCoin200]
         let coinImageNames = ["coin10", "coin50", "coin100", "coin200"]
         let coinValues = [10, 50, 100, 200]
         
         for index in 0...(availableCoins.count - 1) {
-            if nodeAtPoint(location) == availableCoins[index] && model.money >= coinValues[index] {
+            if atPoint(location) == availableCoins[index] && model.money >= coinValues[index] {
                 //set money and bet in model
                 model.bet += coinValues[index]
                 model.money -= coinValues[index]
@@ -334,18 +334,18 @@ class GameScene: SKScene {
                 coinSprite.zPosition = coinPlace.zPosition + 1 + CGFloat(model.amountOfCoins[coinImageNames[index]]!)
                 self.addChild(coinSprite)
                 //animate coin
-                let moveCoinAnimation = SKAction.moveBy(CGVectorMake(self.frame.midX, 0), duration: ANIMATION_DURATION)
-                let addRealCoin = SKAction.runBlock({ self.addChild(bettedCoins[index]) })
+                let moveCoinAnimation = SKAction.move(by: CGVector(dx: self.frame.midX, dy: 0), duration: ANIMATION_DURATION)
+                let addRealCoin = SKAction.run({ self.addChild(bettedCoins[index]) })
                 if (model.amountOfCoins[coinImageNames[index]]! > 0) {
-                    coinSprite.runAction(SKAction.sequence([moveCoinAnimation, SKAction.removeFromParent()]))
+                    coinSprite.run(SKAction.sequence([moveCoinAnimation, SKAction.removeFromParent()]))
                 } else {
-                    coinSprite.runAction(SKAction.sequence([moveCoinAnimation, addRealCoin, SKAction.removeFromParent()]))
+                    coinSprite.run(SKAction.sequence([moveCoinAnimation, addRealCoin, SKAction.removeFromParent()]))
                 }
                 model.amountOfCoins[coinImageNames[index]]! += 1
             }
         }
         for index in 0...(bettedCoins.count - 1) {
-            if nodeAtPoint(location) == bettedCoins[index] {
+            if atPoint(location) == bettedCoins[index] {
                 //set money and bet in model
                 model.bet -= coinValues[index]
                 model.money += coinValues[index]
@@ -356,8 +356,8 @@ class GameScene: SKScene {
                 coinSprite.zPosition = 3
                 self.addChild(coinSprite)
                 //animate coin
-                let moveCoinAnimation = SKAction.moveBy(CGVectorMake(-1 * self.frame.midX, 0), duration: ANIMATION_DURATION)
-                coinSprite.runAction(SKAction.sequence([moveCoinAnimation, SKAction.removeFromParent()]))
+                let moveCoinAnimation = SKAction.move(by: CGVector(dx: -1 * self.frame.midX, dy: 0), duration: ANIMATION_DURATION)
+                coinSprite.run(SKAction.sequence([moveCoinAnimation, SKAction.removeFromParent()]))
                 //update coins, remove from screen if needed
                 model.amountOfCoins[coinImageNames[index]]! -= 1
                 if model.amountOfCoins[coinImageNames[index]]! == 0 {
@@ -367,7 +367,7 @@ class GameScene: SKScene {
         }
     }
     
-    func dealCard(cardPosition: CGPoint, dealPlayer: Bool, cardName: String) {
+    func dealCard(_ cardPosition: CGPoint, dealPlayer: Bool, cardName: String) {
         
         let cardDrawn = cardPile.getRandomCard()
         var cardZPosition = CGFloat()
@@ -389,8 +389,8 @@ class GameScene: SKScene {
         cardSprite.name = cardName
         self.addChild(cardSprite)
         //animate
-        let animation = SKAction.moveTo(cardPosition, duration: ANIMATION_DURATION)
-        cardSprite.runAction(animation)
+        let animation = SKAction.move(to: cardPosition, duration: ANIMATION_DURATION)
+        cardSprite.run(animation)
         //update count
         if !(!dealPlayer && model.dealerCards.count == 1) {
             model.updateCount(cardDrawn)
@@ -401,12 +401,12 @@ class GameScene: SKScene {
     }
     
     func dealPlayer() {
-        let playerPosition = CGPointMake(self.frame.size.width * 0.4 + CGFloat(20 * model.playerCards.count), self.frame.size.height * 0.45 + CGFloat(20 * model.playerCards.count))
+        let playerPosition = CGPoint(x: self.frame.size.width * 0.4 + CGFloat(20 * model.playerCards.count), y: self.frame.size.height * 0.45 + CGFloat(20 * model.playerCards.count))
         dealCard(playerPosition, dealPlayer: true, cardName: "player" + String(model.playerCards.count))
     }
     
     func dealDealer() {
-        let dealerPosition = CGPointMake(self.frame.size.width * 0.2 + CGFloat(20 * model.dealerCards.count), deck.position.y)
+        let dealerPosition = CGPoint(x: self.frame.size.width * 0.2 + CGFloat(20 * model.dealerCards.count), y: deck.position.y)
         dealCard(dealerPosition, dealPlayer: false, cardName: "dealer" + String(model.dealerCards.count))
     }
     
@@ -415,33 +415,33 @@ class GameScene: SKScene {
             showDialog("Set Bets", message: "Please set your bets before starting to deal.", handler: nil)
             return
         }
-        let playerAction = SKAction.runBlock({self.dealPlayer()})
-        let dealerAction = SKAction.runBlock({self.dealDealer()})
-        let waitAction = SKAction.waitForDuration(ANIMATION_DURATION)
-        let showDecisions = SKAction.runBlock({
+        let playerAction = SKAction.run({self.dealPlayer()})
+        let dealerAction = SKAction.run({self.dealDealer()})
+        let waitAction = SKAction.wait(forDuration: ANIMATION_DURATION)
+        let showDecisions = SKAction.run({
 //            TODO: split implementieren
 //            for node in [self.hit, self.stand, self.split, self.double, self.playerValueLabel, self.dealerValueLabel] {
             for node in [self.hit, self.stand, self.double, self.playerValueLabel, self.dealerValueLabel] {
                 self.addChild(node)
             }
         })
-        self.runAction(SKAction.sequence([playerAction, waitAction, dealerAction, waitAction, playerAction, waitAction, dealerAction, waitAction, showDecisions]))
+        self.run(SKAction.sequence([playerAction, waitAction, dealerAction, waitAction, playerAction, waitAction, dealerAction, waitAction, showDecisions]))
         if model.getPlayerValue() == 21 {
             playerBlackjack()
         }
     }
    
-    override func update(currentTime: CFTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
         moneyLabel.text = "Money: " + String(model.money)
         bettingLabel.text = "Bet: " + String(model.bet)
     }
     
     //HELPER
     
-    func showDialog(title: String, message: String, handler: ((UIAlertAction) -> Void)?) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let okAction = UIAlertAction(title: "Ok", style: .Default, handler: handler)
+    func showDialog(_ title: String, message: String, handler: ((UIAlertAction) -> Void)?) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: handler)
         alertController.addAction(okAction)
-        self.view?.window?.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
+        self.view?.window?.rootViewController!.present(alertController, animated: true, completion: nil)
     }
 }

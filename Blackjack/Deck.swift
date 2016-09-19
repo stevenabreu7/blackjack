@@ -10,8 +10,8 @@ import Foundation
 
 class Deck {
     
-    private var cards : [PlayingCard]
-    private var numberOfDecks : Int
+    fileprivate var cards : [PlayingCard]
+    fileprivate var numberOfDecks : Int
     
     init() {
         self.numberOfDecks = 0
@@ -33,7 +33,7 @@ class Deck {
         var index : Int
         index = Int(arc4random_uniform(UInt32(cards.count)))
         let card = cards[index]
-        cards.removeAtIndex(index)
+        cards.remove(at: index)
         return card
     }
     

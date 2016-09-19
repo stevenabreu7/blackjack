@@ -22,8 +22,8 @@ class GameModel {
     var dealersFirstCardTurned : Bool
     
     init() {
-        money = NSUserDefaults.standardUserDefaults().integerForKey("money")
-        if money == 0 { NSUserDefaults.standardUserDefaults().setInteger(500, forKey: "money") }
+        money = UserDefaults.standard.integer(forKey: "money")
+        if money == 0 { UserDefaults.standard.set(500, forKey: "money") }
         bet = 0
         runningCount = 0
         trueCount = 0
@@ -33,7 +33,7 @@ class GameModel {
         dealersFirstCardTurned = false
     }
     
-    func updateCount(withCard: PlayingCard) {
+    func updateCount(_ withCard: PlayingCard) {
         
     }
     

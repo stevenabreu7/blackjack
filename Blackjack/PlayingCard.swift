@@ -10,11 +10,11 @@ import Foundation
 
 class PlayingCard {
     
-    private var cardNumber : Int    //absolute number of card (1 - 52)
+    fileprivate var cardNumber : Int    //absolute number of card (1 - 52)
     
-    private var suit : Int          //0 - spades, 1 - hearts, 2 - diamonds, 3 - clubs
-    private var rank : Int          //1 - ace, 11 - jack, 12 - queen, 13 - king
-    private var value : Int         //blackjack value of cards (ace counts as 11)
+    fileprivate var suit : Int          //0 - spades, 1 - hearts, 2 - diamonds, 3 - clubs
+    fileprivate var rank : Int          //1 - ace, 11 - jack, 12 - queen, 13 - king
+    fileprivate var value : Int         //blackjack value of cards (ace counts as 11)
     
     init(cardNumber : Int) {
         self.cardNumber = cardNumber
@@ -53,7 +53,7 @@ class PlayingCard {
         return cardNumber
     }
     
-    func isEqualTo(card: PlayingCard) -> Bool {
+    func isEqualTo(_ card: PlayingCard) -> Bool {
         return card.getAbsoluteCardNumber() == getAbsoluteCardNumber()
     }
     

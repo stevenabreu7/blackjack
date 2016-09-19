@@ -152,6 +152,7 @@
 					B0F0105E1D6886CD00B8033B = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = MZ92X9CSE4;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -337,6 +338,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.stevenabreu.21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -355,6 +357,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.stevenabreu.21;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -377,6 +380,7 @@
 				B0F010771D6886CD00B8033B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
