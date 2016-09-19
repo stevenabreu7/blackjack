@@ -17,26 +17,7 @@
 		B0F010791D68C9F400B8033B /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F010781D68C9F400B8033B /* Deck.swift */; };
 		B0F0107B1D68CA1500B8033B /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F0107A1D68CA1500B8033B /* PlayingCard.swift */; };
 		B0F0107E1D69F39F00B8033B /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F0107D1D69F39F00B8033B /* GameModel.swift */; };
-		B0F010801D69FB6400B8033B /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F0107F1D69FB6400B8033B /* RealmSwift.framework */; };
-		B0F010811D69FB6500B8033B /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B0F0107F1D69FB6400B8033B /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B0F010861D69FD1500B8033B /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0F010851D69FD1500B8033B /* Realm.framework */; };
-		B0F010871D69FD1500B8033B /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B0F010851D69FD1500B8033B /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B0F010821D69FB6500B8033B /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B0F010871D69FD1500B8033B /* Realm.framework in Embed Frameworks */,
-				B0F010811D69FB6500B8033B /* RealmSwift.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B0F0105F1D6886CD00B8033B /* Blackjack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blackjack.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,8 +42,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0F010861D69FD1500B8033B /* Realm.framework in Frameworks */,
-				B0F010801D69FB6400B8033B /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,7 +105,6 @@
 				B0F0105B1D6886CD00B8033B /* Sources */,
 				B0F0105C1D6886CD00B8033B /* Frameworks */,
 				B0F0105D1D6886CD00B8033B /* Resources */,
-				B0F010821D69FB6500B8033B /* Embed Frameworks */,
 				B0F010831D69FBC900B8033B /* ShellScript */,
 				B0F010841D69FC9E00B8033B /* Headers */,
 			);
@@ -146,7 +124,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = stevenabreu;
 				TargetAttributes = {
 					B0F0105E1D6886CD00B8033B = {
@@ -200,7 +178,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework/strip-frameworks.sh\"\n";
+			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -254,8 +232,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -299,8 +279,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -319,6 +301,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
