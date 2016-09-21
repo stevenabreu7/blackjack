@@ -90,6 +90,8 @@ class GameScene: SKScene {
         self.addChild(coin100)
         self.addChild(coin200)
         
+        hideCoinsAsAppropriate()
+        
         betCoin10.position = CGPoint(x: self.frame.size.width / 2 + coin10.size.width * 1.1, y: coin10.size.height * 0.75)
         betCoin50.position = CGPoint(x: self.frame.size.width / 2 + coin50.size.width * 0.6, y: coin50.size.height * 1.75)
         betCoin100.position = CGPoint(x: self.frame.size.width / 2 + coin100.size.width * 2.2, y: coin100.size.height * 0.75)
@@ -241,7 +243,7 @@ class GameScene: SKScene {
         if model.getDealerValue() < 17 {
             self.run(dealAndWaitSequence, completion: {_ in self.dealerWorkflow()})
         } else {
-            showdown()
+            self.run(SKAction.wait(forDuration: (ANIMATION_DURATION * 2)), completion: {_ in self.showdown()})
         }
     }
     
@@ -261,26 +263,84 @@ class GameScene: SKScene {
     
     func playerWon() {
         model.money += model.bet * 2
-        showDialog("You won", message: "Nice job.", handler: {_ in self.restartGame()})
+        
+        let bettedCoins = [betCoin10, betCoin50, betCoin100, betCoin200]
+        let coinImageNames = ["coin10", "coin50", "coin100", "coin200"]
+        
+        for coinName in coinImageNames {
+            if (model.amountOfCoins[coinName] != 0) {
+                let coin = bettedCoins[coinImageNames.index(of: coinName)!]
+                
+                //animate coin
+                let moveCoinAnimation = SKAction.move(by: CGVector(dx: (-1 * self.frame.midX), dy: 0), duration: ANIMATION_DURATION)
+                coin.run(SKAction.sequence([moveCoinAnimation, SKAction.removeFromParent()]), completion: {_ in self.restartGame()})
+            }
+        }
+        
+//        showDialog("You won", message: "Win.", handler: {_ in self.restartGame()})
     }
     
     func draw() {
         model.money += model.bet
-        showDialog("It's a draw", message: "You still suck.", handler: {_ in self.restartGame()})
+        
+        let bettedCoins = [betCoin10, betCoin50, betCoin100, betCoin200]
+        let coinImageNames = ["coin10", "coin50", "coin100", "coin200"]
+        
+        for coinName in coinImageNames {
+            if (model.amountOfCoins[coinName] != 0) {
+                let coin = bettedCoins[coinImageNames.index(of: coinName)!]
+                
+                //animate coin
+                let moveCoinAnimation = SKAction.move(by: CGVector(dx: (-1 * self.frame.midX), dy: 0), duration: ANIMATION_DURATION)
+                coin.run(SKAction.sequence([moveCoinAnimation, SKAction.removeFromParent()]), completion: {_ in self.restartGame()})
+            }
+        }
+        
+//        showDialog("It's a draw", message: "Draw.", handler: {_ in self.restartGame()})
     }
     
     func playerLost() {
         model.bet = 0
-        showDialog("You lost", message: "Sucker.", handler: {_ in self.restartGame()})
+        
+        let bettedCoins = [betCoin10, betCoin50, betCoin100, betCoin200]
+        let coinImageNames = ["coin10", "coin50", "coin100", "coin200"]
+        
+        for coinName in coinImageNames {
+            if (model.amountOfCoins[coinName] != 0) {
+                let coin = bettedCoins[coinImageNames.index(of: coinName)!]
+                
+                //animate coin
+                let moveCoinAnimation = SKAction.move(by: CGVector(dx: self.frame.midX, dy: 0), duration: ANIMATION_DURATION)
+                coin.run(SKAction.sequence([moveCoinAnimation, SKAction.removeFromParent()]), completion: {_ in self.restartGame()})
+            }
+        }
+        
+//        showDialog("You lost", message: "Lose.", handler: {_ in self.restartGame()})
     }
     
     func playerDoubles() {
+        model.money -= model.bet
+        model.bet *= 2
         playerHits()
         playerStands()
     }
     
     func playerBusted() {
-        showDialog("Busted!", message: "You suck.", handler: {_ in self.restartGame()})
+//        showDialog("Busted!", message: "You lose.", handler: {_ in self.restartGame()})
+        
+        let bettedCoins = [betCoin10, betCoin50, betCoin100, betCoin200]
+        let coinImageNames = ["coin10", "coin50", "coin100", "coin200"]
+        
+        for coinName in coinImageNames {
+            if (model.amountOfCoins[coinName] != 0) {
+                let coin = bettedCoins[coinImageNames.index(of: coinName)!]
+                
+                //animate coin
+                let moveCoinAnimation = SKAction.move(by: CGVector(dx: self.frame.midX, dy: 0), duration: ANIMATION_DURATION)
+                coin.run(SKAction.sequence([moveCoinAnimation, SKAction.removeFromParent()]), completion: {_ in self.restartGame()})
+            }
+        }
+        
         gameOver()
     }
     
@@ -304,6 +364,13 @@ class GameScene: SKScene {
         }
         //reset model
         model.restartGame()
+        //reset bet coin position
+        betCoin10.position = CGPoint(x: self.frame.size.width / 2 + coin10.size.width * 1.1, y: coin10.size.height * 0.75)
+        betCoin50.position = CGPoint(x: self.frame.size.width / 2 + coin50.size.width * 0.6, y: coin50.size.height * 1.75)
+        betCoin100.position = CGPoint(x: self.frame.size.width / 2 + coin100.size.width * 2.2, y: coin100.size.height * 0.75)
+        betCoin200.position = CGPoint(x: self.frame.size.width / 2 + coin200.size.width * 1.7, y: coin200.size.height * 1.75)
+        //hide coins
+        hideCoinsAsAppropriate()
     }
     
     func playerBlackjack() {
@@ -339,7 +406,7 @@ class GameScene: SKScene {
                 if (model.amountOfCoins[coinImageNames[index]]! > 0) {
                     coinSprite.run(SKAction.sequence([moveCoinAnimation, SKAction.removeFromParent()]))
                 } else {
-                    coinSprite.run(SKAction.sequence([moveCoinAnimation, addRealCoin, SKAction.removeFromParent()]))
+                    coinSprite.run(SKAction.sequence([moveCoinAnimation, addRealCoin, SKAction.removeFromParent()]), completion: {_ in print(bettedCoins[index])})
                 }
                 model.amountOfCoins[coinImageNames[index]]! += 1
             }
@@ -364,6 +431,35 @@ class GameScene: SKScene {
                     bettedCoins[index].removeFromParent()
                 }
             }
+        }
+        hideCoinsAsAppropriate()
+    }
+    
+    func hideCoinsAsAppropriate() {
+        coin10.isHidden = false;
+        coin50.isHidden = false;
+        coin100.isHidden = false;
+        coin200.isHidden = false;
+        if model.money >= 200 {
+            //show all
+        } else if model.money >= 100 {
+            //hide 200
+            coin200.isHidden = true;
+        } else if model.money >= 50 {
+            //hide 100
+            coin100.isHidden = true;
+            coin200.isHidden = true;
+        } else if model.money >= 10 {
+            //hide 50
+            coin50.isHidden = true;
+            coin100.isHidden = true;
+            coin200.isHidden = true;
+        } else {
+            //hide all
+            coin10.isHidden = true;
+            coin50.isHidden = true;
+            coin100.isHidden = true;
+            coin200.isHidden = true;
         }
     }
     
