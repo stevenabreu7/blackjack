@@ -32,6 +32,9 @@ class Deck {
     func getRandomCard() -> PlayingCard {
         var index : Int
         index = Int(arc4random_uniform(UInt32(cards.count)))
+        if cards.count == 0 {
+            reshuffleDeck()
+        }
         let card = cards[index]
         cards.remove(at: index)
         return card

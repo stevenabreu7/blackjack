@@ -159,23 +159,23 @@ class GameScene: SKScene {
         runningCountLabel.fontColor = SKColor.white
         runningCountLabel.text = "Running: " + "0"
         runningCountLabel.fontSize = 20
-        self.addChild(runningCountLabel)
+//        self.addChild(runningCountLabel)
         
         trueCountLabel.position = CGPoint(x: deck.position.x, y: deck.position.y - deck.size.height * 1.75)
         trueCountLabel.fontColor = SKColor.white
         trueCountLabel.fontSize = 20
         trueCountLabel.text = "True: " + String(model.trueCount)
-        self.addChild(trueCountLabel)
+//        self.addChild(trueCountLabel)
         
-//        handsPlayedLabel.position = CGPointMake(deck.position.x, deck.position.y - deck.size.height * 2)
-//        handsPlayedLabel.fontColor = SKColor.whiteColor()
-//        handsPlayedLabel.fontSize = 20
+        handsPlayedLabel.position = CGPoint(x: deck.position.x, y: deck.position.y - deck.size.height * 2)
+        handsPlayedLabel.fontColor = SKColor.white
+        handsPlayedLabel.fontSize = 20
 //        handsPlayedLabel.text = "Hands: " + String(handsPlayed)
 //        self.addChild(handsPlayedLabel)
         
-//        deckCountLabel.position = CGPointMake(deck.position.x, deck.position.y - deck.size.height * 2.25)
-//        deckCountLabel.fontColor = SKColor.whiteColor()
-//        deckCountLabel.fontSize = 20
+        deckCountLabel.position = CGPoint(x: deck.position.x, y: deck.position.y - deck.size.height * 2.25)
+        deckCountLabel.fontColor = SKColor.white
+        deckCountLabel.fontSize = 20
 //        deckCountLabel.text = "Cards: " + String(card.count)
 //        self.addChild(deckCountLabel)
     }
@@ -213,6 +213,8 @@ class GameScene: SKScene {
                 self.run(SKAction.sequence([SKAction.wait(forDuration: ANIMATION_DURATION), SKAction.run({ self.playerBusted() })]))
             }
             playerValueLabel.text = String(model.getPlayerValue())
+        } else {
+            _ = model.didPlayerBust()
         }
     }
     
@@ -301,6 +303,9 @@ class GameScene: SKScene {
     
     func playerLost() {
         model.bet = 0
+        if model.money == 0 {
+            model.money = 500
+        }
         
         let bettedCoins = [betCoin10, betCoin50, betCoin100, betCoin200]
         let coinImageNames = ["coin10", "coin50", "coin100", "coin200"]
@@ -319,10 +324,12 @@ class GameScene: SKScene {
     }
     
     func playerDoubles() {
-        model.money -= model.bet
-        model.bet *= 2
-        playerHits()
-        playerStands()
+        if (model.playerCards.count == 2) {
+            model.money -= model.bet
+            model.bet *= 2
+            playerHits()
+            playerStands()
+        }
     }
     
     func playerBusted() {
@@ -375,7 +382,8 @@ class GameScene: SKScene {
     
     func playerBlackjack() {
         model.money += Int(round(Double(model.bet) * 1.5))
-        showDialog("Blackjack", message: "Nice, you got a natural blackjack!", handler: {_ in self.restartGame()})
+        model.money -= model.money % 10
+        showDialog("Blackjack!", message: "", handler: {_ in self.restartGame()})
         gameOver()
     }
     
@@ -388,6 +396,10 @@ class GameScene: SKScene {
         let bettedCoins = [betCoin10, betCoin50, betCoin100, betCoin200]
         let coinImageNames = ["coin10", "coin50", "coin100", "coin200"]
         let coinValues = [10, 50, 100, 200]
+        
+        if (!model.playerCards.isEmpty) {
+            return
+        }
         
         for index in 0...(availableCoins.count - 1) {
             if atPoint(location) == availableCoins[index] && model.money >= coinValues[index] {
@@ -494,6 +506,8 @@ class GameScene: SKScene {
         //update value labels
         playerValueLabel.text = String(model.getPlayerValue())
         dealerValueLabel.text = String(model.getDealerValue())
+        
+        print(model.playedCards.count)
     }
     
     func dealPlayer() {
@@ -521,10 +535,12 @@ class GameScene: SKScene {
                 self.addChild(node)
             }
         })
-        self.run(SKAction.sequence([playerAction, waitAction, dealerAction, waitAction, playerAction, waitAction, dealerAction, waitAction, showDecisions]))
-        if model.getPlayerValue() == 21 {
-            playerBlackjack()
-        }
+        let checkBlackjack = SKAction.run({
+            if self.model.getPlayerValue() == 21 {
+                self.playerBlackjack()
+            }
+        })
+        self.run(SKAction.sequence([playerAction, waitAction, dealerAction, waitAction, playerAction, waitAction, dealerAction, waitAction, showDecisions, checkBlackjack]))
     }
    
     override func update(_ currentTime: TimeInterval) {
