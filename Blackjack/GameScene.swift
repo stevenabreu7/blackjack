@@ -410,7 +410,7 @@ class GameScene: SKScene {
                 let coinSprite = SKSpriteNode(imageNamed: coinImageNames[index])
                 coinSprite.size = coin10.size
                 coinSprite.position = availableCoins[index].position
-                coinSprite.zPosition = coinPlace.zPosition + 1 + CGFloat(model.amountOfCoins[coinImageNames[index]]!)
+                coinSprite.zPosition = coinPlace.zPosition + 2 + CGFloat(model.amountOfCoins[coinImageNames[index]]!)
                 self.addChild(coinSprite)
                 //animate coin
                 let moveCoinAnimation = SKAction.move(by: CGVector(dx: self.frame.midX, dy: 0), duration: ANIMATION_DURATION)
@@ -418,7 +418,7 @@ class GameScene: SKScene {
                 if (model.amountOfCoins[coinImageNames[index]]! > 0) {
                     coinSprite.run(SKAction.sequence([moveCoinAnimation, SKAction.removeFromParent()]))
                 } else {
-                    coinSprite.run(SKAction.sequence([moveCoinAnimation, addRealCoin, SKAction.removeFromParent()]), completion: {_ in print(bettedCoins[index])})
+                    coinSprite.run(SKAction.sequence([moveCoinAnimation, addRealCoin, SKAction.removeFromParent()]), completion: {})
                 }
                 model.amountOfCoins[coinImageNames[index]]! += 1
             }
@@ -432,7 +432,7 @@ class GameScene: SKScene {
                 let coinSprite = SKSpriteNode(imageNamed: coinImageNames[index])
                 coinSprite.size = coin10.size
                 coinSprite.position = bettedCoins[index].position
-                coinSprite.zPosition = 3
+                coinSprite.zPosition = 4
                 self.addChild(coinSprite)
                 //animate coin
                 let moveCoinAnimation = SKAction.move(by: CGVector(dx: -1 * self.frame.midX, dy: 0), duration: ANIMATION_DURATION)
