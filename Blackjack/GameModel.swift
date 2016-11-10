@@ -15,6 +15,7 @@ class GameModel {
     var bet : Int
     var runningCount : Int
     var trueCount : Int
+    var cardCount : Int
     var playerCards : [PlayingCard]
     var dealerCards : [PlayingCard]
     var amountOfCoins = ["coin10" : 0, "coin50" : 0, "coin100" : 0, "coin200" : 0]
@@ -27,6 +28,7 @@ class GameModel {
         bet = 0
         runningCount = 0
         trueCount = 0
+        cardCount = 0
         playerCards = [PlayingCard]()
         dealerCards = [PlayingCard]()
         playedCards = [String]()
@@ -34,7 +36,8 @@ class GameModel {
     }
     
     func updateCount(_ withCard: PlayingCard) {
-        
+        runningCount += withCard.getOmegaIICount()
+        cardCount += 1
     }
     
     func dealersTurn() {

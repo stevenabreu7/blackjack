@@ -48,11 +48,14 @@ class GameScene: SKScene {
     
     //CONSTANTS
     let ANIMATION_DURATION = TimeInterval(0.5)
+    let DECK_COUNT = 1;
     
     override func didMove(to view: SKView) {
-        
-        cardPile = Deck(numberOfDecks: 2)
+        cardPile = Deck(numberOfDecks: DECK_COUNT)
         model = GameModel()
+        if model.money <= 0 {
+            model.money = 500
+        }
         
         setupScene()
     }
@@ -186,7 +189,10 @@ class GameScene: SKScene {
             
             setBets(location)
             if atPoint(location) == deck {
-                firstDeal()
+                if (model.playerCards.count == 0) {
+                    firstDeal()
+                } else {
+                }
             }
             playerOptions(location)
             if atPoint(location) == restartLabel {
@@ -303,7 +309,7 @@ class GameScene: SKScene {
     
     func playerLost() {
         model.bet = 0
-        if model.money == 0 {
+        if model.money <= 0 {
             model.money = 500
         }
         
@@ -324,7 +330,7 @@ class GameScene: SKScene {
     }
     
     func playerDoubles() {
-        if (model.playerCards.count == 2) {
+        if (model.playerCards.count == 2 && model.money >= model.bet) {
             model.money -= model.bet
             model.bet *= 2
             playerHits()
@@ -354,6 +360,12 @@ class GameScene: SKScene {
     func restartGame() {
         //clear bet
         model.bet = 0
+        
+        //mock money
+        if model.money <= 0 {
+            model.money = 500
+        }
+        
         //clear coins
         for coin in [betCoin10, betCoin50, betCoin100, betCoin200] {
             coin.removeFromParent()
@@ -541,11 +553,6 @@ class GameScene: SKScene {
             }
         })
         self.run(SKAction.sequence([playerAction, waitAction, dealerAction, waitAction, playerAction, waitAction, dealerAction, waitAction, showDecisions, checkBlackjack]))
-    }
-   
-    override func update(_ currentTime: TimeInterval) {
-        moneyLabel.text = "Money: " + String(model.money)
-        bettingLabel.text = "Bet: " + String(model.bet)
     }
     
     //HELPER

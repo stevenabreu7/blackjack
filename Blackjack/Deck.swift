@@ -12,15 +12,18 @@ class Deck {
     
     fileprivate var cards : [PlayingCard]
     fileprivate var numberOfDecks : Int
+    var model: GameModel
     
     init() {
+        self.model = GameModel()
         self.numberOfDecks = 0
         self.cards = [PlayingCard]()
     }
     
     init(numberOfDecks: Int) {
+        self.model = GameModel()
         self.numberOfDecks = numberOfDecks
-        cards = [PlayingCard]()
+        self.cards = [PlayingCard]()
         
         for _ in 1...self.numberOfDecks {
             for i in 1...52 {
@@ -36,6 +39,7 @@ class Deck {
             reshuffleDeck()
         }
         let card = cards[index]
+        model.updateCount(card)
         cards.remove(at: index)
         return card
     }

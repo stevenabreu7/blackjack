@@ -49,6 +49,20 @@ class PlayingCard {
         }
     }
     
+    func getOmegaIICount() -> Int {
+        if value == 2 || value == 3 || value == 7 {
+            return 1
+        } else if value == 4 || value == 5 || value == 6 {
+            return 2
+        } else if value == 9 {
+            return -1
+        } else if value == 10 {
+            return -2
+        } else {
+            return 0
+        }
+    }
+    
     func getAbsoluteCardNumber() -> Int {
         return cardNumber
     }
